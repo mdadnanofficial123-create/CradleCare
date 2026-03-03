@@ -1,0 +1,39 @@
+{
+  "name": "cradlecare",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "npm@10.0.0",
+  "description": "Monorepo for CradleCare (web, mobile, api)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier . --write",
+    "dev:api": "turbo run dev --filter=api",
+    "dev:web": "turbo run dev --filter=web",
+    "dev:mobile": "turbo run dev --filter=mobile"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@react-navigation/native": "^7.1.31",
+    "@react-navigation/native-stack": "^7.14.2",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "expo-status-bar": "^55.0.4",
+    "prettier": "^3.3.0",
+    "react-native-safe-area-context": "^5.7.0",
+    "react-native-screens": "^4.24.0",
+    "turbo": "^2.0.0",
+    "typescript": "5.5.4",
+    "typescript-eslint": "^8.0.0"
+  },
+  "dependencies": {
+    "expo": "^55.0.4"
+  }
+}

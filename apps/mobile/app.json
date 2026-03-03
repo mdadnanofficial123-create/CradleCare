@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "CradleCare",
+    "slug": "cradlecare",
+    "version": "0.1.0",
+    "platforms": ["ios", "android"],
+    "assetBundlePatterns": ["**/*"],
+    "experiments": {
+      "tsconfigPaths": false
+    }
+  }
+}
