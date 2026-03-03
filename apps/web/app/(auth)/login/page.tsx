@@ -8,6 +8,7 @@ export default function LoginPage() {
   const envBase = rawEnvBase ? rawEnvBase.replace(/^\"|\"$/g, '') : undefined;
   const fallbackBase = `${typeof window !== 'undefined' ? window.location.protocol : 'http:'}//${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}:3001`;
   const baseCandidates = [envBase, fallbackBase].filter(Boolean) as string[];
+  const base = baseCandidates[0];
   const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
