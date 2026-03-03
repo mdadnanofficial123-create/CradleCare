@@ -13,7 +13,7 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "test": "jest",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
     "clean": "rimraf dist"
   },
   "dependencies": {
