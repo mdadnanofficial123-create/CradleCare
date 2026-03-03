@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { TrustBadges } from '../branding/TrustBadges';
 
@@ -27,7 +29,7 @@ export function SiteHeader() {
                 <span style={{ color: 'var(--brand)' }}>Care</span>
               </Link>
               <span className="pill text-xs" style={{ color: 'var(--muted)' }}>
-                Premium medical‑commerce • Pregnancy → 5 Years
+                Premium medical-commerce • Pregnancy → 5 Years
               </span>
             </div>
 
@@ -52,4 +54,3 @@ export function SiteHeader() {
     </header>
   );
 }
-
