@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/api.Dockerfile
+    container_name: startup-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - startup-network
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/web.Dockerfile
+    container_name: startup-web
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - startup-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: startup-redis
+    restart: unless-stopped
+    networks:
+      - startup-network
+
+networks:
+  startup-network:
+    external: true
