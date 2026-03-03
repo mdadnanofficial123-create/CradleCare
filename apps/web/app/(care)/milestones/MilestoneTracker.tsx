@@ -73,20 +73,31 @@ export function MilestoneTracker() {
     (async () => {
       try {
         const raw = process.env.NEXT_PUBLIC_API_BASE_URL;
-        const envBase = raw ? raw.replace(/^\"|\"$/g, '') : undefined;
-        const fallback = `${location.protocol}//${location.hostname}:3001`;
-        const bases = [envBase, fallback].filter(Boolean) as string[];
-        let lastErr = null;
+
+        const envBase = raw
+          ? raw.replace(/^"|"$/g, "")
+          : undefined;
+
+        const fallback =
+          typeof window !== "undefined"
+            ? `${window.location.protocol}//${window.location.hostname}:3001`
+            : undefined;
+
+        const bases = [envBase, fallback].filter(
+          Boolean
+        ) as string[];
+
         for (const b of bases) {
           try {
             const res = await fetch(`${b}/milestones`);
             if (res.ok) {
-              setMilestones(await res.json());
-              lastErr = null;
+              const data: Milestone[] =
+                await res.json();
+              setMilestones(data);
               break;
             }
-          } catch (e) {
-            lastErr = e;
+          } catch {
+            // try next base
           }
         }
       } catch {
@@ -94,63 +105,5 @@ export function MilestoneTracker() {
       }
     })();
   }, []);
-
-  return (
-    <div className="card p-4">
-      <div className="grid" style={{ gridTemplateColumns: 'minmax(220px, 320px) 1fr', gap: 14 }}>
-        <div className="flex flex-col" style={{ gap: 10 }}>
-          <label className="font-bold">Baby age (months)</label>
-          <input
-            type="number"
-            min={0}
-            max={72}
-            value={Number.isFinite(months) ? months : 0}
-            onChange={(e) => setMonths(Number(e.target.value))}
-            className="p-3 rounded-lg border border-border bg-surface text-base outline-none"
-          />
-          <div className="pill" style={{ width: 'fit-content' }}>
-            <span className="font-extrabold" style={{ color: 'var(--brand-ink)' }}>
-              Stage:
-            </span>
-            <span className="text-muted"> {stage}</span>
-          </div>
-          <div className="text-muted text-sm">
-            “Doctor‑Prescribed” recommendations are stage‑based and will be refined as we add your child’s profile.
-          </div>
-        </div>
-
-        <div>
-          <div className="font-extrabold" style={{ color: 'var(--brand-ink)' }}>
-            Recommended for this stage
-          </div>
-          <div className="mt-2 grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
-            {recs.map((r) => (
-              <div key={r.title} className="card p-3" style={{ boxShadow: 'none' }}>
-                <div className="font-bold">{r.title}</div>
-                <div className="text-muted mt-1">{r.why}</div>
-                <div className="mt-2">
-                  <a className="btn btnPrimary" href="/products">
-                    View in catalog
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      {milestones.length > 0 && (
-        <div className="mt-6">
-          <div className="font-extrabold mb-2">Your milestones</div>
-          <ul className="list-disc list-inside text-sm text-muted">
-            {milestones.map((m) => (
-              <li key={m.id}>
-                {m.title} — due {new Date(m.dueDate).toLocaleDateString()}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
 }
 
